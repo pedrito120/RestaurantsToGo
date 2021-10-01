@@ -24,32 +24,32 @@ const RestaurantCard = styled(Card)`
 
 const RestaurantCardCover = styled(Card.Cover)`
     background-color: ${props => props.theme.colors.ui.quaternary};
-`;
+    `;
 const Rating = styled.View`
-  display: flex;
-  flex-direction: row;
-`;
+    display: flex;
+    flex-direction: row;
+    `;
 const Open = styled.View`
-display:flex;
-right:0;
-position: absolute;
-padding:${props => props.theme.space[3]};
-`;
+    display:flex;
+    right:0;
+    position: absolute;
+    padding:${props => props.theme.space[3]};
+    `;
 const Closed = styled.Text`
-font-family: ${props => props.theme.fonts.monospace};
-color: red;
-padding:${props => props.theme.space[3]};
-font-size: ${props => props.theme.fontSizes.body};
-`;
+    font-family: ${props => props.theme.fonts.monospace};
+    color: red;
+    padding:${props => props.theme.space[3]};
+    font-size: ${props => props.theme.fontSizes.body};
+    `;
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
     const {
         name = "restaurant mexican",
         icon,
         photos = ['https://media.istockphoto.com/photos/two-empty-wine-glasses-sitting-in-a-restaurant-on-a-warm-sunny-picture-id1018141890?k=20&m=1018141890&s=612x612&w=0&h=uMDP00MMIhlwQE77EEcoelc2oSKBT_B6avaXqtxgiow='],
         address = "1 Norte, 38 Oriente",
-        isOpenNow = "true",
+        isOpenNow = "false",
         rating = 8,
-        isClosedTemporarily = "false",
+        isClosedTemporarily = "true",
     } = restaurant;
     const ratingArray = Array.from(new Array(Math.ceil(rating)));
     console.log(ratingArray);
