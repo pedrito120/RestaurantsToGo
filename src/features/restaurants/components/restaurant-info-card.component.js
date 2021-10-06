@@ -18,8 +18,8 @@ const Address = styled.Text`
     font-family: ${props => props.theme.fonts.heading};
     `;
 const RestaurantCard = styled(Card)`
-    padding: ${props => props.theme.space[3]};
     background-color: ${props => props.theme.colors.ui.quaternary};
+    margin-bottom:16;
     `;
 
 const RestaurantCardCover = styled(Card.Cover)`
@@ -47,11 +47,11 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
         icon,
         photos = ['https://media.istockphoto.com/photos/two-empty-wine-glasses-sitting-in-a-restaurant-on-a-warm-sunny-picture-id1018141890?k=20&m=1018141890&s=612x612&w=0&h=uMDP00MMIhlwQE77EEcoelc2oSKBT_B6avaXqtxgiow='],
         address = "1 Norte, 38 Oriente",
-        isOpenNow = "false",
-        rating = 8,
+        isOpenNow = "true",
+        rating = 5,
         isClosedTemporarily = "true",
     } = restaurant;
-    const ratingArray = Array.from(new Array(Math.ceil(rating)));
+    const ratingArray = Array.from(new Array(rating));
     console.log(ratingArray);
     return (
         <RestaurantCard>
@@ -64,8 +64,8 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
                     ))}
                 </Rating>
                 <Open>
-                    {isOpenNow === "true" ? <SvgXml xml={open} width={50} height={50} /> : null}
-                    {isClosedTemporarily === "true" ? <Closed>CLOSED TEMPORARILY</Closed> : null}
+                    {isOpenNow === "true" ? <SvgXml xml={open} width={50} height={50} /> :<Closed>CLOSED TEMPORARILY</Closed> }
+                   
                 </Open>
 
                 <Address>{address}</Address>
