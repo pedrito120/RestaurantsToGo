@@ -1,38 +1,55 @@
-import React from "react";
-import { StatusBar, SafeAreaView, View, Platform,FlatList } from "react-native";
-import { Searchbar } from "react-native-paper";
-import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
-import styled from "styled-components/native";
+import React, { useContext, useState } from 'react'
+import { SafeAreaView, View, FlatList, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Colors } from 'react-native-paper'
+import styled from 'styled-components/native'
+import { RestaurantInfoCard } from '../components/restaurant-info-card'
+import { RestaurantContext } from '../../../services/restaurants/restaurants.context';
+import { SearchComponent } from '../components/search.component'
+//const isAndroid = Platform.OS === 'android'
 
-console.log(StatusBar.currentHeight);
-const isAndroid = Platform.OS === 'android';
-const SafeArea = styled(SafeAreaView)`
-    flex:1;
-    margin-top: ${isAndroid? StatusBar.currentHeight + 'px': 0};
-`;
-const SearchContainer = styled(View)`
-    padding: ${props => props.theme.space[3]};
-`;
-const RestaurantListContainer = styled(View)`
-    flex: 1;
-    padding: 10px;
-`;
+const ContainerScreen = styled(SafeAreaView)`
+  flex: 1;
+`
+//margin-top: ${isAndroid && StatusBar.currentHeight}px;
 
-export const RestaurantScreen = () => {
-    return (
-        <SafeArea>
-            <SearchContainer>
-                <Searchbar/>
-            </SearchContainer>
-           <FlatList
-           data={[{name:1},{name:2},{name:3}]}
-           renderItem={()=><RestaurantInfoCard/>}
-           keyExtractor={(item)=>item.id}
-           contentContainerStyle={{padding:16}}
-           />
-                
-            
-        </SafeArea>
-    )
+const Loading = styled(ActivityIndicator)`
+  margin-left: -25px;
+`
+const LoadingContainer = styled(View)`
+  position: absolute;
+  top: 25%;
+  left: 44%;
+`
+export const RestaurantScreen = ({ navigation }) => {
+  const [search, setSearch] = useState('')
+  const onChangeSearch = query => setSearch(query)
+  const {restaurants, isLoading, error} = useContext(RestaurantContext);
+  return (
+    <ContainerScreen>
+        <SearchComponent />
+      {
+        isLoading ?
+            <LoadingContainer>
+              <ActivityIndicator
+                size={50}
+                style={Loading}
+                animating={true}
+                color={Colors.blue300}
+              />
+            </LoadingContainer>
+          :
+            <FlatList
+              data={restaurants}
+              renderItem={({ item }) =>{
+                return (
+                  <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails",{restaurant: item})}>
+                    <RestaurantInfoCard restaurant={item}/>
+                  </TouchableOpacity>
+                );
+              }}
+              keyExtractor={((item, index) => index.toString())}
+            />
+      }
+    </ContainerScreen>
+  )
 }
-  
